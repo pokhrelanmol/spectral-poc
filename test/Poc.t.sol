@@ -17,12 +17,7 @@ contract POC is Test {
     ISynapseERC20 public synapseERC20;
     SmartContractWallet public smartContractWallet;
     function setUp() public {
-        vm.createSelectFork(
-            vm.rpcUrl(
-                "https://base-mainnet.g.alchemy.com/v2/8mftSFJdO22ITt73DN6uhAqQML13EBvm"
-            ),
-            26660216
-        );
+        vm.createSelectFork(vm.rpcUrl("PUT_BASE_RPC_HERE"), 26660216);
         autonomousAgentDeployer = AutonomousAgentDeployer(
             0x977FDaA235D15346bFf4e3b3e457887DFf1bdcf3
         );
