@@ -161,6 +161,7 @@ contract AutonomousAgentDeployer is
         string memory _agentTicker,
         uint256 specAmount
     ) public payable whenNotPaused {
+        //0.01 ether -> deployment cost
         require(
             msg.value >= parameters[Parameter.DEPLOYMENT_COST_ETH],
             "Incorrect ETH amount"
@@ -205,6 +206,7 @@ contract AutonomousAgentDeployer is
             msg.value >= parameters[Parameter.DEPLOYMENT_COST_ETH],
             "Incorrect ETH amount"
         );
+        // 0.01 ether -> deployment cost
 
         // Calculate ETH required for fees and deduct from the total ETH received
         uint256 treasuryFee = parameters[Parameter.DEPLOYMENT_TREASURY_FEE];
@@ -212,6 +214,7 @@ contract AutonomousAgentDeployer is
             Parameter.INITIAL_TRADING_BALANCE
         ];
         uint256 totalFees = initialTradingBalance + treasuryFee;
+        //
 
         require(msg.value >= totalFees, "Insufficient ETH for fees");
 
@@ -295,13 +298,13 @@ contract AutonomousAgentDeployer is
 
         (bool success, ) = feeWallet.call{
             value: parameters[Parameter.DEPLOYMENT_TREASURY_FEE]
-        }("");
+        }(""); // transfer 0.0055 from 0.01 now we have 0.01 - 0.0055 = 0.0045 ether left
         require(success, "Transfer failed.");
 
         // Deposit the initial trading balance to agent balance contract
         agentBalances.depositETH{
             value: parameters[Parameter.INITIAL_TRADING_BALANCE]
-        }(_agentToken);
+        }(_agentToken); // transfer 0.0045 from 0.0045 now we have 0.0045 - 0.0045 = 0 ether left
 
         // Update total SPEC deposited and tokens sold
         totalSPECDeposited[_agentToken] += specAmount;

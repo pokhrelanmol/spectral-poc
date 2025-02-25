@@ -84,7 +84,7 @@ contract AgentToken is Initializable, ERC20Upgradeable, UUPSUpgradeable {
             _transfer(sender, recipient, amount);
             return true;
         }
-        // Check if the recipient is agentBalances to prevent recursion
+        // Check if the reciipient is agentBalances to prevent recursion
         if (recipient == address(agentBalances)) {
             return super.transferFrom(sender, recipient, amount);
         }
